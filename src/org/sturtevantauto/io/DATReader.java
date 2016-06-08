@@ -43,7 +43,7 @@ public class DATReader {
 		reader.close();
 	}
 	/**
-	 * This function should not be run, ever.  It's already done its job.
+	 * This function should not be run, ever.  It's already done its job, which was to populate the database with part names and numbers.
 	 */
 	public static void writeToDatabase(String partname, int partnum) throws SQLException, ClassNotFoundException
 	{
@@ -56,7 +56,13 @@ public class DATReader {
 		statement.close();
 		connection.close();
 	}
-	
+	/**
+	 * Finds the name of a part when given the part number by parsing the index in the SQL database.
+	 * @param partnumber
+	 * @return String partname
+	 * @throws ClassNotFoundException
+	 * @throws SQLException
+	 */
 	public static String findPartName(int partnumber) throws ClassNotFoundException, SQLException
 	{
 		String partname = null;

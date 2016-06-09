@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.SQLException;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class WorksheetReader {
 	
 	
@@ -50,12 +52,14 @@ public class WorksheetReader {
 							}
 							
 							String[] linetext = findText(linebegin, i, name);
+							int q = 1;
 							for(String print : linetext)
 							{
 								if(print != null)
 								{ 
 								print = print.replace(".", "");
-								System.out.println(print);
+								System.out.println(q + ": " + print);
+								q++;
 								}
 							}
 							linebegin = i;
@@ -121,11 +125,12 @@ public class WorksheetReader {
 						line = line.substring(partname.length());
 						
 					
-					String[] splitlines = line.split("    1   ");
+					String[] splitline1 = line.split("    1   ");
+					String[] splitlines = splitline1[0].split("   1   ");
 					splitlines[0] = splitlines[0].trim();
-					//System.out.println(splitlines[0]);
-					//System.out.println(splitlines[0].length());
-					if(!splitlines[0].contains("0   0   0   0   0       0") && !splitlines[0].isEmpty())
+					if(!splitlines[0].contains("0   0   0   0   0       0") && !splitlines[0].isEmpty() &&
+					  (StringUtils.countMatches(splitlines[0], "/") < 4) && !splitlines[0].contains("0   0   0       0")
+					  && !(Character.isDigit(splitlines[0].charAt(0)) && splitlines[0].toCharArray().length == 1))
 					{
 					if(splitlines[0].charAt(0) == 'R' || splitlines[0].charAt(0) == 'L')
 						splitlines[0] = splitlines[0].replace(".", "");
